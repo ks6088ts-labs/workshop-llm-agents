@@ -16,6 +16,7 @@ langchain = "^0.3.8"
 langchain-openai = "^0.2.9"
 langchain-community = "^0.3.8"
 pymupdf = "^1.24.14"
+langchainhub = "^0.1.21"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.0.1"
