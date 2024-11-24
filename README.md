@@ -5,7 +5,7 @@
 
 # workshop-llm-agents
 
-This is a template repository for Python
+This repository is for a workshop to build LLM agents.
 
 ## Prerequisites
 
