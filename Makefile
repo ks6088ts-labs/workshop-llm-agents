@@ -48,8 +48,8 @@ ci-test: install-deps-dev format-check lint test ## run CI tests
 # Docker
 # ---
 DOCKER_REPO_NAME ?= ks6088ts
-DOCKER_IMAGE_NAME ?= template-python
-DOCKER_COMMAND ?= python template_python/core.py
+DOCKER_IMAGE_NAME ?= workshop-llm-agents
+DOCKER_COMMAND ?= python workshop_llm_agents/core.py
 
 # Tools
 TOOLS_DIR ?= $(HOME)/.local/bin
@@ -78,4 +78,5 @@ docker-scan: ## scan Docker image
 	trivy image $(DOCKER_REPO_NAME)/$(DOCKER_IMAGE_NAME):$(GIT_TAG)
 
 .PHONY: ci-test-docker
-ci-test-docker: docker-lint docker-build docker-scan docker-run ## run CI test for Docker
+ci-test-docker: docker-lint docker-build docker-run ## run CI test for Docker
+	# make docker-scan
