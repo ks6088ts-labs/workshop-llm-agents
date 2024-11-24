@@ -25,6 +25,10 @@ pytest = "^8.3.3"
 coverage = "^7.6.7"
 pytest-cov = "^6.0.0"
 
+
+[tool.poetry.group.docs.dependencies]
+mkdocs-material = "^9.5.45"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
