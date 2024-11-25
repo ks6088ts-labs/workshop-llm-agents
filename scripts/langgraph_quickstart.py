@@ -6,6 +6,7 @@ import typer
 from dotenv import load_dotenv
 from langchain_community.tools.bing_search import BingSearchResults
 from langchain_community.utilities import BingSearchAPIWrapper
+from langchain_core.messages import AIMessage, ToolMessage
 from langchain_openai import AzureChatOpenAI
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import StateGraph
@@ -82,23 +83,42 @@ def run(
     )
     config = {"configurable": {"thread_id": "1"}}
 
-    while True:
-        # If you type exit, the loop will break
-        # If you type continue, the loop will continue
-        query = input("Enter a query: ")
-        if query == "exit":
-            break
-        events = graph.stream(
-            input={"messages": [("user", query)]} if query != "continue" else None,
-            config=config,
-            stream_mode="values",
+    query = input("Enter a query: ")
+    events = graph.stream(
+        input={"messages": [("user", query)]},
+        config=config,
+        stream_mode="values",
+    )
+    for event in events:
+        if "messages" in event:
+            event["messages"][-1].pretty_print()
+    snapshot = graph.get_state(config)
+    existing_message = snapshot.values["messages"][-1]
+    existing_message.pretty_print()
+    print(existing_message.tool_calls)
+    print(snapshot.next)
+
+    # If interrupted, type your pseudo response as AIMessage
+    if snapshot.next:
+        answer = input("Enter user input: ")
+        new_messages = [
+            # The LLM API expects some ToolMessage to match its tool call. We'll satisfy that here.
+            ToolMessage(content=answer, tool_call_id=existing_message.tool_calls[0]["id"]),
+            # And then directly "put words in the LLM's mouth" by populating its response.
+            AIMessage(content=answer),
+        ]
+        print(new_messages[-1].pretty_print())
+        graph.update_state(
+            # Which state to update
+            config,
+            # The updated values to provide.
+            # The messages in our `State` are "append-only", meaning this will be appended
+            # to the existing state. We will review how to update existing messages in the next section!
+            {"messages": new_messages},
         )
-        for event in events:
-            if "messages" in event:
-                event["messages"][-1].pretty_print()
-        snapshot = graph.get_state(config)
-        print(snapshot.next)
-        print(snapshot.values["messages"][-1].tool_calls)
+
+    print("\n\nLast 2 messages;")
+    print(graph.get_state(config).values["messages"][-2:])
 
 
 @app.command()
