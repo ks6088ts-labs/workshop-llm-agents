@@ -6,7 +6,6 @@ import typer
 from dotenv import load_dotenv
 from langchain_community.tools.bing_search import BingSearchResults
 from langchain_community.utilities import BingSearchAPIWrapper
-from langchain_core.messages import HumanMessage
 from langchain_openai import AzureChatOpenAI
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import StateGraph
@@ -58,48 +57,64 @@ graph_builder.add_edge("tools", "chatbot")
 graph_builder.set_entry_point("chatbot")
 
 
-def create_graph(memory: bool = False):
-    if memory:
-        return graph_builder.compile(
-            checkpointer=MemorySaver(),
-        )
-    return graph_builder.compile()
+def create_graph(
+    memory: bool = False,
+    interrupt: bool = False,
+):
+    return graph_builder.compile(
+        checkpointer=MemorySaver() if memory else None,
+        interrupt_before=["tools"] if interrupt else None,
+    )
 
 
 @app.command()
 def run(
     memory: bool = False,
+    interrupt: bool = False,
     verbose: bool = False,
 ):
     if verbose:
         logging.basicConfig(level=logging.DEBUG)
 
-    graph = create_graph(memory=memory)
+    graph = create_graph(
+        memory=memory,
+        interrupt=interrupt,
+    )
+    config = {"configurable": {"thread_id": "1"}}
 
     while True:
-        query = input("Enter a query(If you want to exit, type 'exit'): ")
+        # If you type exit, the loop will break
+        # If you type continue, the loop will continue
+        query = input("Enter a query: ")
         if query == "exit":
             break
-        final_state = graph.invoke(
-            {
-                "messages": [
-                    HumanMessage(content=query),
-                ]
-            },
-            config={"configurable": {"thread_id": 42}},
+        events = graph.stream(
+            input={"messages": [("user", query)]} if query != "continue" else None,
+            config=config,
+            stream_mode="values",
         )
-        print(final_state["messages"][-1].content)
+        for event in events:
+            if "messages" in event:
+                event["messages"][-1].pretty_print()
+        snapshot = graph.get_state(config)
+        print(snapshot.next)
+        print(snapshot.values["messages"][-1].tool_calls)
 
 
 @app.command()
 def draw_mermaid_png(
+    memory: bool = False,
+    interrupt: bool = False,
     output: str = None,
     verbose: bool = False,
 ):
     if verbose:
         logging.basicConfig(level=logging.DEBUG)
 
-    graph = create_graph()
+    graph = create_graph(
+        memory=memory,
+        interrupt=interrupt,
+    )
     print(graph.get_graph().draw_mermaid())
     if output:
         graph.get_graph().draw_mermaid_png(
