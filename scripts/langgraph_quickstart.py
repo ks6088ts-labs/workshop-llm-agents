@@ -116,6 +116,7 @@ def create_graph(
 def run(
     memory: bool = False,
     interrupt: bool = False,
+    replay: bool = False,
     verbose: bool = False,
 ):
     if verbose:
@@ -153,6 +154,24 @@ def run(
         # Resume the graph by invoking it with None as the inputs
         events = graph.stream(None, config, stream_mode="values")
         for event in events:
+            if "messages" in event:
+                event["messages"][-1].pretty_print()
+
+    if replay:
+        to_replay = None
+
+        # See the state history
+        for state in graph.get_state_history(config):
+            print("Num Messages: ", len(state.values["messages"]), "Next: ", state.next)
+            print("-" * 80)
+            # We are somewhat arbitrarily selecting a specific state based on the number of chat messages in the state.
+            if len(state.values["messages"]) == 2:
+                to_replay = state
+
+        # Load the state from that moment and resume execution
+        print(to_replay.next)
+        print(to_replay.config)
+        for event in graph.stream(None, to_replay.config, stream_mode="values"):
             if "messages" in event:
                 event["messages"][-1].pretty_print()
 
