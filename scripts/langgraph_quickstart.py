@@ -8,6 +8,7 @@ from langchain_community.tools.bing_search import BingSearchResults
 from langchain_community.utilities import BingSearchAPIWrapper
 from langchain_core.messages import HumanMessage
 from langchain_openai import AzureChatOpenAI
+from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import StateGraph
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
@@ -55,26 +56,39 @@ graph_builder.add_conditional_edges(
 # Any time a tool is called, we return to the chatbot to decide the next step
 graph_builder.add_edge("tools", "chatbot")
 graph_builder.set_entry_point("chatbot")
-graph = graph_builder.compile()
+
+
+def create_graph(memory: bool = False):
+    if memory:
+        return graph_builder.compile(
+            checkpointer=MemorySaver(),
+        )
+    return graph_builder.compile()
 
 
 @app.command()
 def run(
-    query: str = "what is the weather in sf",
+    memory: bool = False,
     verbose: bool = False,
 ):
     if verbose:
         logging.basicConfig(level=logging.DEBUG)
 
-    final_state = graph.invoke(
-        {
-            "messages": [
-                HumanMessage(content=query),
-            ]
-        },
-        config={"configurable": {"thread_id": 42}},
-    )
-    print(final_state["messages"][-1].content)
+    graph = create_graph(memory=memory)
+
+    while True:
+        query = input("Enter a query(If you want to exit, type 'exit'): ")
+        if query == "exit":
+            break
+        final_state = graph.invoke(
+            {
+                "messages": [
+                    HumanMessage(content=query),
+                ]
+            },
+            config={"configurable": {"thread_id": 42}},
+        )
+        print(final_state["messages"][-1].content)
 
 
 @app.command()
@@ -85,6 +99,7 @@ def draw_mermaid_png(
     if verbose:
         logging.basicConfig(level=logging.DEBUG)
 
+    graph = create_graph()
     print(graph.get_graph().draw_mermaid())
     if output:
         graph.get_graph().draw_mermaid_png(
