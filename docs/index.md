@@ -41,3 +41,26 @@ poetry run python scripts/bing_searches.py chain \
 ### References
 
 - [Bing Search](https://python.langchain.com/docs/integrations/tools/bing_search/)
+
+## langgraphs.py
+
+![langgraphs_mermaid](images/langgraphs_mermaid.png)
+
+```shell
+# help
+poetry run python scripts/langgraphs.py --help
+
+# draw a graph in mermaid format
+poetry run python scripts/langgraphs.py draw-mermaid-png \
+    --output docs/images/langgraphs_mermaid.png
+
+# run a workflow implemented by LangGraph
+poetry run python scripts/langgraphs.py run \
+    --query "How is the weather today in Japan?"
+poetry run python scripts/langgraphs.py run \
+    --query "How is the weather today in San Francisco?"
+```
+
+### References
+
+- [🦜🕸️LangGraph](https://langchain-ai.github.io/langgraph/)
