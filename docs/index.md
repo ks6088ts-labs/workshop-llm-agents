@@ -64,3 +64,4 @@ poetry run python scripts/langgraphs.py run \
 ### References
 
 - [🦜🕸️LangGraph](https://langchain-ai.github.io/langgraph/)
+- [🚀 LangGraph Quick Start](https://langchain-ai.github.io/langgraph/tutorials/introduction/)
