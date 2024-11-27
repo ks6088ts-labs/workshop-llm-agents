@@ -63,9 +63,8 @@ def get_azure_chat_openai(
     )
 
 
-# https://learn.microsoft.com/azure/ai-services/openai/how-to/switching-endpoints#microsoft-entra-id-authentication
 @app.command()
-def azure_openai(
+def openai(
     service_principal: bool = False,
     verbose: bool = False,
 ):
