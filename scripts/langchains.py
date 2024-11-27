@@ -47,7 +47,7 @@ def get_azure_chat_openai(
     temperature: float = 0,
 ):
     if service_principal:
-        AzureChatOpenAI(
+        return AzureChatOpenAI(
             temperature=temperature,
             azure_ad_async_token_provider=get_azure_ad_token_provider(),
             api_version=getenv("AZURE_OPENAI_API_VERSION"),
