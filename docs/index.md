@@ -22,6 +22,7 @@ poetry run python scripts/cosmosdbs.py query-data \
 - [AzureDataRetrievalAugmentedGenerationSamples/Python/CosmosDB-NoSQL_VectorSearch](https://github.com/microsoft/AzureDataRetrievalAugmentedGenerationSamples/tree/main/Python/CosmosDB-NoSQL_VectorSearch)
 - [Azure Cosmos DB ベクター検索機能と RAG の実装ガイド](https://note.com/generativeai_new/n/n3fcb2e57d195)
 - [Azure CosmosDB for NoSQL でベクトル検索しよう！！](https://zenn.dev/nomhiro/articles/cosmos-nosql-vector-search)
+- [Use data plane role-based access control with Azure Cosmos DB for NoSQL](https://learn.microsoft.com/azure/cosmos-db/nosql/security/how-to-grant-data-plane-role-based-access?tabs=built-in-definition%2Ccsharp&pivots=azure-interface-cli)
 
 ## bing_searches.py
 
@@ -65,3 +66,26 @@ poetry run python scripts/langgraphs.py run \
 
 - [🦜🕸️LangGraph](https://langchain-ai.github.io/langgraph/)
 - [🚀 LangGraph Quick Start](https://langchain-ai.github.io/langgraph/tutorials/introduction/)
+
+## langchains.py
+
+```shell
+# help
+poetry run python scripts/langchains.py --help
+
+# via OpenAI SDK
+# call with API key
+poetry run python scripts/langchains.py openai --verbose
+# call with service principal
+poetry run python scripts/langchains.py openai --verbose --service-principal
+
+# via LangChain
+# call with API key
+poetry run python scripts/langchains.py langchain --verbose
+# call with service principal
+poetry run python scripts/langchains.py langchain --verbose --service-principal
+```
+
+### References
+
+- [How to switch between OpenAI and Azure OpenAI endpoints with Python > Microsoft Entra ID authentication](https://learn.microsoft.com/azure/ai-services/openai/how-to/switching-endpoints#microsoft-entra-id-authentication)
