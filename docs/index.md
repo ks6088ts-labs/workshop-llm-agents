@@ -15,6 +15,42 @@ poetry run python scripts/cosmosdbs.py query-data \
     --query "農林⽔産祭天皇杯受賞者"
 ```
 
+To use Microsoft Entra ID authentication, you need to create a role assignment for the user or service principal.
+Refer to the following documents for more information.
+
+- [Use data plane role-based access control with Azure Cosmos DB for NoSQL](https://learn.microsoft.com/azure/cosmos-db/how-to-setup-rbac#role-assignments)
+- [Use data plane role-based access control with Azure Cosmos DB for NoSQL](https://learn.microsoft.com/azure/cosmos-db/nosql/security/how-to-grant-data-plane-role-based-access?tabs=built-in-definition%2Cpython&pivots=azure-interface-cli)
+
+To create a role assignment for the user or service principal, you can use the following Azure CLI commands.
+
+```shell
+# Set variables
+RESOURCE_GROUP_NAME="YOUR_RESOURCE_GROUP_NAME"
+COSMOSDB_ACCOUNT_NAME="YOUR_COSMOSDB_ACCOUNT_NAME"
+# Note: If you are creating a role assignment for a service principal, use the Object ID in the Enterprise applications section of the Microsoft Entra ID portal blade.
+PRINCIPAL_ID="00000000-0000-0000-0000-000000000000"
+
+# Get the role definition ID
+ROLE_DEFINITION_ID=$(az cosmosdb sql role definition list \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --account-name $COSMOSDB_ACCOUNT_NAME \
+    --query "[?roleName=='Cosmos DB Built-in Data Contributor'].id" --output tsv)
+
+# Get the Cosmos DB account ID
+AZURE_COSMOSDB_ACCOUNT_ID=$(az cosmosdb show \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name $COSMOSDB_ACCOUNT_NAME \
+    --query "{id:id}" --output tsv)
+
+# Assign the role to the user
+az cosmosdb sql role assignment create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --account-name $COSMOSDB_ACCOUNT_NAME \
+    --role-definition-id $ROLE_DEFINITION_ID \
+    --scope $AZURE_COSMOSDB_ACCOUNT_ID \
+    --principal-id $PRINCIPAL_ID
+```
+
 ### References
 
 - [Azure Cosmos DB No SQL](https://python.langchain.com/docs/integrations/vectorstores/azure_cosmos_db_no_sql/)
