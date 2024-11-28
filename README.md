@@ -14,6 +14,10 @@ This repository is for a workshop to build LLM agents.
 - [Poetry](https://python-poetry.org/docs/#installation)
 - [GNU Make](https://www.gnu.org/software/make/)
 
+## Architecture
+
+![Architecture](./docs/images/workshop-llm-agents.png)
+
 ## Development instructions
 
 ### Local development

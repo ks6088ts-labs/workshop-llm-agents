@@ -1,12 +1,20 @@
 # Agents
 
-## Chatbot with Tools
+## Overview
+
+### Architecture
+
+![Agents](./images/workshop-llm-agents.png)
+
+## Use cases
+
+### Chatbot with Tools
 
 ![Chatbot with Tools](./images/chatbot_with_tools.png)
 
 To implement a chatbot with tools, you can refer to [🚀 LangGraph Quick Start > Part 2: 🛠️ Enhancing the Chatbot with Tools](https://langchain-ai.github.io/langgraph/tutorials/introduction/#part-2-enhancing-the-chatbot-with-tools).
 
-### CLI
+#### CLI
 
 To run the chatbot with tools in the terminal, you can use the following command:
 
@@ -50,10 +58,12 @@ $ poetry run python main.py chatbot-with-tools
 $ poetry run python main.py export --png docs/images/chatbot_with_tools.png
 ```
 
-### Web
+#### Web
 
 To run the chatbot with tools in the web interface, you can use the following command:
 
 ```shell
 $ poetry run python -m streamlit run workshop_llm_agents/streamlits/1_chatbot_with_tools.py
 ```
+
+![Chatbot with Tools Web Interface](./images/1_chatbot_with_tools.png)
