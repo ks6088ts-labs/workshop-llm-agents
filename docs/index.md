@@ -6,14 +6,16 @@
 
 To implement a chatbot with tools, you can refer to [🚀 LangGraph Quick Start > Part 2: 🛠️ Enhancing the Chatbot with Tools](https://langchain-ai.github.io/langgraph/tutorials/introduction/#part-2-enhancing-the-chatbot-with-tools).
 
-To run the chatbot with tools, you can use the following commands:
+### CLI
+
+To run the chatbot with tools in the terminal, you can use the following command:
 
 ```shell
 # help
-poetry run python main.py --help
+$ poetry run python main.py --help
 
 # run chatbot with tools in terminal
-poetry run python main.py chatbot-with-tools
+$ poetry run python main.py chatbot-with-tools
 
 # Enter a query(type 'q' to exit): Please explain LangChain with Web search
 # ================================ Human Message =================================
@@ -45,5 +47,13 @@ poetry run python main.py chatbot-with-tools
 # Enter a query(type 'q' to exit): q
 
 # Export the chatbot with tools to a PNG file
-poetry run python main.py export --png docs/images/chatbot_with_tools.png
+$ poetry run python main.py export --png docs/images/chatbot_with_tools.png
+```
+
+### Web
+
+To run the chatbot with tools in the web interface, you can use the following command:
+
+```shell
+$ poetry run python -m streamlit run workshop_llm_agents/streamlits/1_chatbot_with_tools.py
 ```
