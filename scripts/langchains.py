@@ -52,14 +52,14 @@ def get_azure_chat_openai(
             azure_ad_async_token_provider=get_azure_ad_token_provider(),
             api_version=getenv("AZURE_OPENAI_API_VERSION"),
             azure_endpoint=getenv("AZURE_OPENAI_ENDPOINT"),
-            model=getenv("AZURE_OPENAI_GPT_MODEL"),
+            model=getenv("AZURE_OPENAI_MODEL_GPT"),
         )
     return AzureChatOpenAI(
         temperature=temperature,
         api_key=getenv("AZURE_OPENAI_API_KEY"),
         api_version=getenv("AZURE_OPENAI_API_VERSION"),
         azure_endpoint=getenv("AZURE_OPENAI_ENDPOINT"),
-        model=getenv("AZURE_OPENAI_GPT_MODEL"),
+        model=getenv("AZURE_OPENAI_MODEL_GPT"),
     )
 
 
@@ -74,7 +74,7 @@ def openai(
     client = get_azure_openai(service_principal)
 
     chat_completion = client.chat.completions.create(
-        model=getenv("AZURE_OPENAI_GPT_MODEL"),
+        model=getenv("AZURE_OPENAI_MODEL_GPT"),
         messages=[
             {
                 "role": "user",

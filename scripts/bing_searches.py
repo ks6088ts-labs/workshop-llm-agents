@@ -68,7 +68,7 @@ def chain(
         api_key=getenv("AZURE_OPENAI_API_KEY"),
         api_version=getenv("AZURE_OPENAI_API_VERSION"),
         azure_endpoint=getenv("AZURE_OPENAI_ENDPOINT"),
-        model=getenv("AZURE_OPENAI_GPT_MODEL"),
+        model=getenv("AZURE_OPENAI_MODEL_GPT"),
     )
     tools = [
         BingSearchResults(
@@ -82,7 +82,7 @@ def chain(
         verbose=True,
     )
     result = agent_executor.invoke({"input": query})
-    print(f"Answer from agent: {result["output"]}")
+    print(f"Answer from agent: {result['output']}")
 
 
 if __name__ == "__main__":

@@ -2,19 +2,6 @@
 
 ## cosmosdbs.py
 
-```shell
-# help
-poetry run python scripts/cosmosdbs.py --help
-
-# insert data to Cosmos DB
-poetry run python scripts/cosmosdbs.py insert-data \
-    --pdf-url "https://www.maff.go.jp/j/wpaper/w_maff/r5/pdf/zentaiban_20.pdf"
-
-# query data from Cosmos DB
-poetry run python scripts/cosmosdbs.py query-data \
-    --query "農林⽔産祭天皇杯受賞者"
-```
-
 To use Microsoft Entra ID authentication, you need to create a role assignment for the user or service principal.
 Refer to the following documents for more information.
 
@@ -31,10 +18,12 @@ COSMOSDB_ACCOUNT_NAME="YOUR_COSMOSDB_ACCOUNT_NAME"
 PRINCIPAL_ID="00000000-0000-0000-0000-000000000000"
 
 # Get the role definition ID
+# ROLE_NAME="Cosmos DB Built-in Data Reader"
+ROLE_NAME="Cosmos DB Built-in Data Contributor"
 ROLE_DEFINITION_ID=$(az cosmosdb sql role definition list \
     --resource-group $RESOURCE_GROUP_NAME \
     --account-name $COSMOSDB_ACCOUNT_NAME \
-    --query "[?roleName=='Cosmos DB Built-in Data Contributor'].id" --output tsv)
+    --query "[?roleName=='$ROLE_NAME'].id" --output tsv)
 
 # Get the Cosmos DB account ID
 AZURE_COSMOSDB_ACCOUNT_ID=$(az cosmosdb show \
@@ -49,6 +38,28 @@ az cosmosdb sql role assignment create \
     --role-definition-id $ROLE_DEFINITION_ID \
     --scope $AZURE_COSMOSDB_ACCOUNT_ID \
     --principal-id $PRINCIPAL_ID
+
+# List the role assignments
+az cosmosdb sql role assignment list \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --account-name $COSMOSDB_ACCOUNT_NAME
+```
+
+Run the following commands to use the `cosmosdbs.py` script.
+
+```shell
+# help
+poetry run python scripts/cosmosdbs.py --help
+
+# insert data to Cosmos DB
+poetry run python scripts/cosmosdbs.py insert-data \
+    --pdf-url "https://www.maff.go.jp/j/wpaper/w_maff/r5/pdf/zentaiban_20.pdf" \
+    --verbose --service-principal
+
+# query data from Cosmos DB
+poetry run python scripts/cosmosdbs.py query-data \
+    --query "農林⽔産祭天皇杯受賞者" \
+    --verbose --service-principal
 ```
 
 ### References
