@@ -14,6 +14,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     # Microsoft Entra ID
+    use_microsoft_entra_id: bool
     azure_client_id: str
     azure_client_secret: str
     azure_tenant_id: str
@@ -38,8 +39,8 @@ class CosmosDBWrapper:
     def __init__(self, settings: Settings):
         self.settings = settings
 
-    def get_cosmos_client(self, service_principal: bool) -> CosmosClient:
-        if service_principal:
+    def get_cosmos_client(self) -> CosmosClient:
+        if self.settings.use_microsoft_entra_id:
             token_credential = ChainedTokenCredential(
                 ClientSecretCredential(
                     client_id=self.settings.azure_client_id,
@@ -54,7 +55,7 @@ class CosmosDBWrapper:
             )
         return CosmosClient.from_connection_string(self.settings.azure_cosmos_db_connection_string)
 
-    def get_azure_cosmos_db_no_sql_vector_search(self, service_principal: bool) -> VectorStore:
+    def get_azure_cosmos_db_no_sql_vector_search(self) -> VectorStore:
         return AzureCosmosDBNoSqlVectorSearch(
             embedding=AzureOpenAIEmbeddings(
                 api_key=self.settings.azure_openai_api_key,
@@ -62,7 +63,7 @@ class CosmosDBWrapper:
                 azure_endpoint=self.settings.azure_openai_endpoint,
                 model=self.settings.azure_openai_model_embedding,
             ),
-            cosmos_client=self.get_cosmos_client(service_principal=service_principal),
+            cosmos_client=self.get_cosmos_client(),
             database_name=self.settings.azure_cosmos_db_database_name,
             container_name=self.settings.azure_cosmos_db_container_name,
             vector_embedding_policy={

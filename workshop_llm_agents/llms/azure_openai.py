@@ -13,6 +13,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     # Microsoft Entra ID
+    use_microsoft_entra_id: bool
     azure_client_id: str
     azure_client_secret: str
     azure_tenant_id: str
@@ -53,9 +54,17 @@ class AzureOpenAIWrapper:
         self,
         temperature: float = 0,
     ) -> BaseChatModel:
+        if self.settings.use_microsoft_entra_id:
+            return AzureChatOpenAI(
+                temperature=temperature,
+                azure_ad_async_token_provider=self.get_azure_ad_token_provider(),
+                api_version=self.settings.azure_openai_api_version,
+                azure_endpoint=self.settings.azure_openai_endpoint,
+                model=self.settings.azure_openai_model_gpt,
+            )
         return AzureChatOpenAI(
             temperature=temperature,
-            azure_ad_async_token_provider=self.get_azure_ad_token_provider(),
+            api_key=self.settings.azure_openai_api_key,
             api_version=self.settings.azure_openai_api_version,
             azure_endpoint=self.settings.azure_openai_endpoint,
             model=self.settings.azure_openai_model_gpt,
