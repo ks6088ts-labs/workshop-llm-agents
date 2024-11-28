@@ -46,7 +46,7 @@ llm = AzureChatOpenAI(
     api_key=getenv("AZURE_OPENAI_API_KEY"),
     api_version=getenv("AZURE_OPENAI_API_VERSION"),
     azure_endpoint=getenv("AZURE_OPENAI_ENDPOINT"),
-    model=getenv("AZURE_OPENAI_GPT_MODEL"),
+    model=getenv("AZURE_OPENAI_MODEL_GPT"),
 )
 llm_with_tools = llm.bind_tools(tools + [RequestAssistance])
 

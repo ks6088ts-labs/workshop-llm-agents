@@ -1,127 +1,49 @@
-# How to use
+# Agents
 
-## cosmosdbs.py
+## Chatbot with Tools
 
-```shell
-# help
-poetry run python scripts/cosmosdbs.py --help
+![Chatbot with Tools](./images/chatbot_with_tools.png)
 
-# insert data to Cosmos DB
-poetry run python scripts/cosmosdbs.py insert-data \
-    --pdf-url "https://www.maff.go.jp/j/wpaper/w_maff/r5/pdf/zentaiban_20.pdf"
+To implement a chatbot with tools, you can refer to [🚀 LangGraph Quick Start > Part 2: 🛠️ Enhancing the Chatbot with Tools](https://langchain-ai.github.io/langgraph/tutorials/introduction/#part-2-enhancing-the-chatbot-with-tools).
 
-# query data from Cosmos DB
-poetry run python scripts/cosmosdbs.py query-data \
-    --query "農林⽔産祭天皇杯受賞者"
-```
-
-To use Microsoft Entra ID authentication, you need to create a role assignment for the user or service principal.
-Refer to the following documents for more information.
-
-- [Use data plane role-based access control with Azure Cosmos DB for NoSQL](https://learn.microsoft.com/azure/cosmos-db/how-to-setup-rbac#role-assignments)
-- [Use data plane role-based access control with Azure Cosmos DB for NoSQL](https://learn.microsoft.com/azure/cosmos-db/nosql/security/how-to-grant-data-plane-role-based-access?tabs=built-in-definition%2Cpython&pivots=azure-interface-cli)
-
-To create a role assignment for the user or service principal, you can use the following Azure CLI commands.
-
-```shell
-# Set variables
-RESOURCE_GROUP_NAME="YOUR_RESOURCE_GROUP_NAME"
-COSMOSDB_ACCOUNT_NAME="YOUR_COSMOSDB_ACCOUNT_NAME"
-# Note: If you are creating a role assignment for a service principal, use the Object ID in the Enterprise applications section of the Microsoft Entra ID portal blade.
-PRINCIPAL_ID="00000000-0000-0000-0000-000000000000"
-
-# Get the role definition ID
-ROLE_DEFINITION_ID=$(az cosmosdb sql role definition list \
-    --resource-group $RESOURCE_GROUP_NAME \
-    --account-name $COSMOSDB_ACCOUNT_NAME \
-    --query "[?roleName=='Cosmos DB Built-in Data Contributor'].id" --output tsv)
-
-# Get the Cosmos DB account ID
-AZURE_COSMOSDB_ACCOUNT_ID=$(az cosmosdb show \
-    --resource-group $RESOURCE_GROUP_NAME \
-    --name $COSMOSDB_ACCOUNT_NAME \
-    --query "{id:id}" --output tsv)
-
-# Assign the role to the user
-az cosmosdb sql role assignment create \
-    --resource-group $RESOURCE_GROUP_NAME \
-    --account-name $COSMOSDB_ACCOUNT_NAME \
-    --role-definition-id $ROLE_DEFINITION_ID \
-    --scope $AZURE_COSMOSDB_ACCOUNT_ID \
-    --principal-id $PRINCIPAL_ID
-```
-
-### References
-
-- [Azure Cosmos DB No SQL](https://python.langchain.com/docs/integrations/vectorstores/azure_cosmos_db_no_sql/)
-- [Learn Azure Azure Cosmos DB Vector database](https://learn.microsoft.com/azure/cosmos-db/vector-database)
-- [AzureDataRetrievalAugmentedGenerationSamples/Python/CosmosDB-NoSQL_VectorSearch](https://github.com/microsoft/AzureDataRetrievalAugmentedGenerationSamples/tree/main/Python/CosmosDB-NoSQL_VectorSearch)
-- [Azure Cosmos DB ベクター検索機能と RAG の実装ガイド](https://note.com/generativeai_new/n/n3fcb2e57d195)
-- [Azure CosmosDB for NoSQL でベクトル検索しよう！！](https://zenn.dev/nomhiro/articles/cosmos-nosql-vector-search)
-- [Use data plane role-based access control with Azure Cosmos DB for NoSQL](https://learn.microsoft.com/azure/cosmos-db/nosql/security/how-to-grant-data-plane-role-based-access?tabs=built-in-definition%2Ccsharp&pivots=azure-interface-cli)
-
-## bing_searches.py
+To run the chatbot with tools, you can use the following commands:
 
 ```shell
 # help
-poetry run python scripts/bing_searches.py --help
+poetry run python main.py --help
 
-# search data from Bing
-poetry run python scripts/bing_searches.py search \
-    --query "Who is the CEO of Microsoft?"
+# run chatbot with tools in terminal
+poetry run python main.py chatbot-with-tools
 
-# search data from Bing
-poetry run python scripts/bing_searches.py chain \
-    --query "Who is the CEO of Microsoft?"
+# Enter a query(type 'q' to exit): Please explain LangChain with Web search
+# ================================ Human Message =================================
+
+# Please explain LangChain with Web search
+# ================================== Ai Message ==================================
+# Tool Calls:
+#   bing_search_results_json (call_ypoIsXUcpnGoMj4Xa7pvDHaG)
+#  Call ID: call_ypoIsXUcpnGoMj4Xa7pvDHaG
+#   Args:
+#     query: LangChain
+# ================================= Tool Message =================================
+# Name: bing_search_results_json
+
+# [{'snippet': 'Build your app with <b>LangChain</b> Build context-aware, reasoning applications with <b>LangChain</b>’s flexible framework that leverages your company’s data and APIs. Future-proof your application by making vendor optionality part of your LLM infrastructure design.', 'title': 'LangChain', 'link': 'https://www.langchain.com/'}, {'snippet': '<b>Chainsは</b>、<b>LangChainという</b>ソフトウェア名にもなっているように中心的な機能です。 その名の通り、LangChainが持つ様々な機能を「連結」して組み合わせることができます。 試しに chains.py というファイルを作って以下のコードを書いてみ', 'title': 'そろそろ知っておかないとヤバい？ 話題のLangChainを30分だけ ...', 'link': 'https://qiita.com/minorun365/items/081fc560e08f0197a7a8'}, {'snippet': 'LangChainは、プロンプトエンジニアリングを可能にするPythonやJavaScript・TypeScriptのライブラリです。このページでは、LangChainのインストール方法や主な機能、使い方を紹介します。', 'title': 'LangChainの概要と使い方｜サクッと始めるプロンプト ... - Zenn', 'link': 'https://zenn.dev/umi_mori/books/prompt-engineer/viewer/langchain_overview'}, {'snippet': '<b>LangChain</b> <b>とは何か</b>、<b>企業が</b> LangChain を使用する方法と理由、および AWS で LangChain を使用する方法。 メインコンテンツに移動 アマゾン ウェブ サービスのホームページに戻るには、ここをクリック', 'title': 'LangChain とは何ですか? - LangChain の説明 - AWS', 'link': 'https://aws.amazon.com/jp/what-is/langchain/'}]
+# ================================== Ai Message ==================================
+
+# LangChain is a flexible framework designed to build context-aware and reasoning applications by leveraging a company's data and APIs. It allows for the creation of applications that can adapt and make decisions based on the provided context. Here are some key points about LangChain:
+
+# 1. **Core Functionality**: LangChain's core functionality revolves around "chains," which allow for the combination and linking of various features and capabilities within the framework. This modular approach enables developers to create complex applications by connecting different components.
+
+# 2. **Prompt Engineering**: LangChain supports prompt engineering, making it possible to design and optimize prompts for language models. This is particularly useful for applications that require precise and contextually relevant responses.
+
+# 3. **Programming Languages**: LangChain provides libraries for Python, JavaScript, and TypeScript, making it accessible to developers with different programming backgrounds.
+
+# 4. **Vendor Optionality**: One of the key design principles of LangChain is to future-proof applications by incorporating vendor optionality into the LLM (Large Language Model) infrastructure. This means that applications built with LangChain can be more adaptable to changes in underlying technologies and vendors.
+
+# For more detailed information, you can visit the [LangChain website](https://www.langchain.com/).
+# Enter a query(type 'q' to exit): q
+
+# Export the chatbot with tools to a PNG file
+poetry run python main.py export --png docs/images/chatbot_with_tools.png
 ```
-
-### References
-
-- [Bing Search](https://python.langchain.com/docs/integrations/tools/bing_search/)
-
-## langgraphs.py
-
-![langgraphs_mermaid](images/langgraphs_mermaid.png)
-
-```shell
-# help
-poetry run python scripts/langgraphs.py --help
-
-# draw a graph in mermaid format
-poetry run python scripts/langgraphs.py draw-mermaid-png \
-    --output docs/images/langgraphs_mermaid.png
-
-# run a workflow implemented by LangGraph
-poetry run python scripts/langgraphs.py run \
-    --query "How is the weather today in Japan?"
-poetry run python scripts/langgraphs.py run \
-    --query "How is the weather today in San Francisco?"
-```
-
-### References
-
-- [🦜🕸️LangGraph](https://langchain-ai.github.io/langgraph/)
-- [🚀 LangGraph Quick Start](https://langchain-ai.github.io/langgraph/tutorials/introduction/)
-
-## langchains.py
-
-```shell
-# help
-poetry run python scripts/langchains.py --help
-
-# via OpenAI SDK
-# call with API key
-poetry run python scripts/langchains.py openai --verbose
-# call with service principal
-poetry run python scripts/langchains.py openai --verbose --service-principal
-
-# via LangChain
-# call with API key
-poetry run python scripts/langchains.py langchain --verbose
-# call with service principal
-poetry run python scripts/langchains.py langchain --verbose --service-principal
-```
-
-### References
-
-- [How to switch between OpenAI and Azure OpenAI endpoints with Python > Microsoft Entra ID authentication](https://learn.microsoft.com/azure/ai-services/openai/how-to/switching-endpoints#microsoft-entra-id-authentication)

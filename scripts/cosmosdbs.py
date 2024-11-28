@@ -64,7 +64,7 @@ def get_azure_cosmos_db_no_sql_vector_search(service_principal: bool):
             api_key=getenv("AZURE_OPENAI_API_KEY"),
             api_version=getenv("AZURE_OPENAI_API_VERSION"),
             azure_endpoint=getenv("AZURE_OPENAI_ENDPOINT"),
-            model=getenv("AZURE_OPENAI_EMBEDDING_MODEL"),
+            model=getenv("AZURE_OPENAI_MODEL_EMBEDDING"),
         ),
         cosmos_client=get_cosmos_client(service_principal=service_principal),
         database_name=getenv("AZURE_COSMOS_DB_DATABASE_NAME"),
