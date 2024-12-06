@@ -58,7 +58,7 @@ $ poetry run python main.py chatbot-with-tools
 $ poetry run python main.py export --png docs/images/chatbot_with_tools.png
 ```
 
-#### Web
+#### Web app
 
 To run the chatbot with tools in the web interface, you can use the following command:
 
@@ -67,3 +67,13 @@ $ poetry run python -m streamlit run workshop_llm_agents/streamlits/1_chatbot_wi
 ```
 
 ![Chatbot with Tools Web Interface](./images/1_chatbot_with_tools.png)
+
+### [Research Agent with Human-in-the-loop](https://github.com/mahm/softwaredesign-llm-application/tree/main/14)
+
+Graph for the Research Agent with Human-in-the-loop:
+
+![Research Agent with Human-in-the-loop](./images/research_agent.png)
+
+Streamlit app for the Research Agent with Human-in-the-loop:
+
+![Research Agent with Human-in-the-loop](./images/2_research_agent_with_human_in_the_loop.png)
