@@ -3,7 +3,7 @@ import logging
 import typer
 from dotenv import load_dotenv
 
-from workshop_llm_agents.graphs.chatbot_with_tools import graph
+from workshop_llm_agents.agents.chatbot_with_tools import graph
 
 logger = logging.getLogger(__name__)
 app = typer.Typer()

@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit.runtime.scriptrunner import get_script_run_ctx
 
-from workshop_llm_agents.graphs.chatbot_with_tools import graph as chatbot_with_tools_graph
+from workshop_llm_agents.agents.chatbot_with_tools import graph as chatbot_with_tools_graph
 
 with st.sidebar:
     st.image(chatbot_with_tools_graph.get_graph().draw_mermaid_png())
