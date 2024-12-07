@@ -150,7 +150,7 @@ def tasks_passive_goal_creator(
     llm = AzureOpenAIWrapper().get_azure_chat_openai()
     task = PassiveGoalCreator(llm=llm)
     result: Goal = task.run(query=query)
-    print(result)
+    print(result.text)
 
 
 @app.command(
@@ -168,7 +168,7 @@ def tasks_prompt_optimizer(
     llm = AzureOpenAIWrapper().get_azure_chat_openai()
     task = PromptOptimizer(llm=llm)
     result: OptimizedGoal = task.run(query=query)
-    print(result)
+    print(result.text)
 
 
 # ---
