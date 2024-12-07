@@ -7,6 +7,11 @@ logger = logging.getLogger(__name__)
 app = typer.Typer()
 
 
+def set_verbosity(verbose: bool):
+    if verbose:
+        logging.basicConfig(level=logging.DEBUG)
+
+
 # ---
 # agents
 # ---
@@ -16,10 +21,8 @@ app = typer.Typer()
 def agents_chatbot_with_tools_run(
     verbose: bool = False,
 ):
+    set_verbosity(verbose)
     from workshop_llm_agents.agents.chatbot_with_tools import graph
-
-    if verbose:
-        logging.basicConfig(level=logging.DEBUG)
 
     config = {
         "configurable": {
@@ -54,10 +57,8 @@ def agents_chatbot_with_tools_export(
     png: str = None,
     verbose: bool = False,
 ):
+    set_verbosity(verbose)
     from workshop_llm_agents.agents.chatbot_with_tools import graph
-
-    if verbose:
-        logging.basicConfig(level=logging.DEBUG)
 
     print(graph.get_graph().draw_mermaid())
 
@@ -75,11 +76,10 @@ def agents_documentation_run(
     k: int = 3,
     verbose: bool = True,
 ):
+    set_verbosity(verbose)
+
     from workshop_llm_agents.agents.documentation_agent import DocumentationAgent
     from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
-
-    if verbose:
-        logging.basicConfig(level=logging.DEBUG)
 
     azure_openai_wrapper = AzureOpenAIWrapper()
     llm = azure_openai_wrapper.get_azure_chat_openai()
@@ -98,12 +98,10 @@ def llms_azure_openai_chat(
     message: str = "What is the capital of Japan?",
     verbose: bool = False,
 ):
+    set_verbosity(verbose)
     import json
 
     from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
-
-    if verbose:
-        logging.basicConfig(level=logging.DEBUG)
 
     azure_openai_wrapper = AzureOpenAIWrapper()
     llm = azure_openai_wrapper.get_azure_chat_openai()
@@ -123,10 +121,8 @@ def llms_azure_openai_embeddings(
     message: str = "What is the capital of Japan?",
     verbose: bool = False,
 ):
+    set_verbosity(verbose)
     from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
-
-    if verbose:
-        logging.basicConfig(level=logging.DEBUG)
 
     azure_openai_wrapper = AzureOpenAIWrapper()
     embeddings = azure_openai_wrapper.get_azure_openai_embeddings()
@@ -145,12 +141,10 @@ def tools_bing_search(
     query: str = "Microsoft",
     verbose: bool = False,
 ):
+    set_verbosity(verbose)
     import json
 
     from workshop_llm_agents.tools.bing_search import BingSearchWrapper
-
-    if verbose:
-        logging.basicConfig(level=logging.DEBUG)
 
     wrapper = BingSearchWrapper()
     tool = wrapper.get_bing_search_tool()
@@ -177,14 +171,12 @@ def vector_stores_cosmosdb_insert_data(
     chunk_overlap: int = 100,
     verbose: bool = False,
 ):
+    set_verbosity(verbose)
     from langchain_community.document_loaders import PyMuPDFLoader
     from langchain_text_splitters import RecursiveCharacterTextSplitter
 
     from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
     from workshop_llm_agents.vector_stores.cosmosdb import CosmosDBWrapper
-
-    if verbose:
-        logging.basicConfig(level=logging.DEBUG)
 
     cosmosdb_wrapper = CosmosDBWrapper()
     vector_store = cosmosdb_wrapper.get_azure_cosmos_db_no_sql_vector_search(
@@ -214,13 +206,12 @@ def vector_stores_cosmosdb_query_data(
     query: str = "食料自給率の長期的推移",
     verbose: bool = False,
 ):
+    set_verbosity(verbose)
     import json
 
     from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
     from workshop_llm_agents.vector_stores.cosmosdb import CosmosDBWrapper
 
-    if verbose:
-        logging.basicConfig(level=logging.DEBUG)
     cosmosdb_wrapper = CosmosDBWrapper()
     vector_store = cosmosdb_wrapper.get_azure_cosmos_db_no_sql_vector_search(
         embedding=AzureOpenAIWrapper().get_azure_openai_embeddings(),
@@ -248,10 +239,8 @@ def vector_stores_cosmosdb_query_data(
 def streamlit_app(
     verbose: bool = False,
 ):
+    set_verbosity(verbose)
     import streamlit as st
-
-    if verbose:
-        logging.basicConfig(level=logging.DEBUG)
 
     st.title("Code samples for Streamlit")
     st.info("Select a code sample from the sidebar to run it")
