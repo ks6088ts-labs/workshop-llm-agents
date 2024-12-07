@@ -13,7 +13,7 @@ app = typer.Typer()
 @app.command(
     help="Chatbot with tools",
 )
-def chatbot_with_tools(
+def agents_chatbot_with_tools_run(
     verbose: bool = False,
 ):
     from workshop_llm_agents.agents.chatbot_with_tools import graph
@@ -50,7 +50,7 @@ def chatbot_with_tools(
 @app.command(
     help="Export the graph to a PNG file",
 )
-def export(
+def agents_chatbot_with_tools_export(
     png: str = None,
     verbose: bool = False,
 ):
@@ -65,6 +65,27 @@ def export(
         graph.get_graph().draw_mermaid_png(
             output_file_path=png,
         )
+
+
+@app.command(
+    help="Run documentation agent ref. https://github.com/GenerativeAgents/agent-book/tree/main/chapter10",
+)
+def agents_documentation_run(
+    user_request: str = "スマートフォン向けの健康管理アプリを開発したい",
+    k: int = 3,
+    verbose: bool = True,
+):
+    from workshop_llm_agents.agents.documentation_agent import DocumentationAgent
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper, Settings
+
+    if verbose:
+        logging.basicConfig(level=logging.DEBUG)
+
+    azure_openai_wrapper = AzureOpenAIWrapper(Settings())
+    llm = azure_openai_wrapper.get_azure_chat_openai()
+    agent = DocumentationAgent(llm=llm, k=k)
+    final_output = agent.run(user_request=user_request)
+    print(final_output)
 
 
 # ---
