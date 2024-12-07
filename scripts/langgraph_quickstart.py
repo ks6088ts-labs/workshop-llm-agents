@@ -15,7 +15,7 @@ from langgraph.prebuilt import ToolNode, tools_condition
 from pydantic import BaseModel
 from typing_extensions import TypedDict
 
-load_dotenv()
+load_dotenv(override=True)
 logger = logging.getLogger(__name__)
 app = typer.Typer()
 

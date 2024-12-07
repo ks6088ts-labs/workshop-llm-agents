@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from langchain_openai import AzureChatOpenAI
 from openai import AzureOpenAI
 
+load_dotenv(override=True)
 logger = logging.getLogger(__name__)
 app = typer.Typer()
 
@@ -104,5 +105,4 @@ def langchain(
 
 
 if __name__ == "__main__":
-    load_dotenv()
     app()

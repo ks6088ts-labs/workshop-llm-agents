@@ -3,6 +3,7 @@ import logging
 import typer
 from dotenv import load_dotenv
 
+load_dotenv(override=True)
 logger = logging.getLogger(__name__)
 app = typer.Typer()
 
@@ -247,5 +248,4 @@ def streamlit_app(
 
 
 if __name__ == "__main__":
-    load_dotenv(override=True)
     app()

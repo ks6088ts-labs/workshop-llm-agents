@@ -14,7 +14,7 @@ from langchain_community.vectorstores.azure_cosmos_db_no_sql import AzureCosmosD
 from langchain_openai import AzureOpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-load_dotenv()
+load_dotenv(override=True)
 logger = logging.getLogger(__name__)
 app = typer.Typer()
 
@@ -123,5 +123,4 @@ def query_data(
 
 
 if __name__ == "__main__":
-    load_dotenv()
     app()

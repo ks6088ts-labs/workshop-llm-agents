@@ -11,7 +11,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, MessagesState, StateGraph
 from langgraph.prebuilt import ToolNode
 
-load_dotenv()
+load_dotenv(override=True)
 logger = logging.getLogger(__name__)
 app = typer.Typer()
 

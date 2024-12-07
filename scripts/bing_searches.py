@@ -10,7 +10,7 @@ from langchain_community.tools.bing_search import BingSearchResults
 from langchain_community.utilities import BingSearchAPIWrapper
 from langchain_openai import AzureChatOpenAI
 
-load_dotenv()
+load_dotenv(override=True)
 logger = logging.getLogger(__name__)
 app = typer.Typer()
 
@@ -86,5 +86,4 @@ def chain(
 
 
 if __name__ == "__main__":
-    load_dotenv()
     app()
