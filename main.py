@@ -153,6 +153,24 @@ def tasks_passive_goal_creator(
     print(result)
 
 
+@app.command(
+    help="Run the prompt optimizer task",
+)
+def tasks_prompt_optimizer(
+    query: str = "I want to learn how to cook",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tasks.prompt_optimizer import OptimizedGoal, PromptOptimizer
+
+    llm = AzureOpenAIWrapper().get_azure_chat_openai()
+    task = PromptOptimizer(llm=llm)
+    result: OptimizedGoal = task.run(query=query)
+    print(result)
+
+
 # ---
 # tools
 # ---

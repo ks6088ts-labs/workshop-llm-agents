@@ -9,6 +9,7 @@ commands=(
   llms-azure-openai-embeddings
   # tasks
   tasks-passive-goal-creator
+  tasks-prompt-optimizer
   # tools
   tools-bing-search
   # vector-stores
