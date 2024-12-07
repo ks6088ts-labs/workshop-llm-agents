@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 from workshop_llm_agents.agents.research_agent import ResearchAgent
 from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
-from workshop_llm_agents.llms.azure_openai import Settings as AzureOpenAISettings
 
 
 def show_message(type: Literal["human", "agent"], title: str, message: str) -> None:
@@ -22,7 +21,7 @@ def app() -> None:
 
     # Save agent in st.session_state
     if "agent" not in st.session_state:
-        _llm = AzureOpenAIWrapper(AzureOpenAISettings()).get_azure_chat_openai()
+        _llm = AzureOpenAIWrapper().get_azure_chat_openai()
         _agent = ResearchAgent(_llm)
         _agent.subscribe(show_message)
         st.session_state.agent = _agent

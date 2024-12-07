@@ -76,12 +76,12 @@ def agents_documentation_run(
     verbose: bool = True,
 ):
     from workshop_llm_agents.agents.documentation_agent import DocumentationAgent
-    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper, Settings
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
 
     if verbose:
         logging.basicConfig(level=logging.DEBUG)
 
-    azure_openai_wrapper = AzureOpenAIWrapper(Settings())
+    azure_openai_wrapper = AzureOpenAIWrapper()
     llm = azure_openai_wrapper.get_azure_chat_openai()
     agent = DocumentationAgent(llm=llm, k=k)
     final_output = agent.run(user_request=user_request)
@@ -100,12 +100,12 @@ def llms_azure_openai_chat(
 ):
     import json
 
-    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper, Settings
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
 
     if verbose:
         logging.basicConfig(level=logging.DEBUG)
 
-    azure_openai_wrapper = AzureOpenAIWrapper(Settings())
+    azure_openai_wrapper = AzureOpenAIWrapper()
     llm = azure_openai_wrapper.get_azure_chat_openai()
     response = llm.invoke(input=message)
     print(
@@ -123,12 +123,12 @@ def llms_azure_openai_embeddings(
     message: str = "What is the capital of Japan?",
     verbose: bool = False,
 ):
-    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper, Settings
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
 
     if verbose:
         logging.basicConfig(level=logging.DEBUG)
 
-    azure_openai_wrapper = AzureOpenAIWrapper(Settings())
+    azure_openai_wrapper = AzureOpenAIWrapper()
     embeddings = azure_openai_wrapper.get_azure_openai_embeddings()
     embedding = embeddings.embed_query(message)
     print(f"Dimensions: {len(embedding)}")
@@ -147,12 +147,12 @@ def tools_bing_search(
 ):
     import json
 
-    from workshop_llm_agents.tools.bing_search import BingSearchWrapper, Settings
+    from workshop_llm_agents.tools.bing_search import BingSearchWrapper
 
     if verbose:
         logging.basicConfig(level=logging.DEBUG)
 
-    wrapper = BingSearchWrapper(Settings())
+    wrapper = BingSearchWrapper()
     tool = wrapper.get_bing_search_tool()
     response = tool.invoke(input=query)
     response = json.loads(response.replace("'", '"'))
@@ -181,16 +181,14 @@ def vector_stores_cosmosdb_insert_data(
     from langchain_text_splitters import RecursiveCharacterTextSplitter
 
     from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
-    from workshop_llm_agents.llms.azure_openai import Settings as AzureOpenAIWrapperSettings
     from workshop_llm_agents.vector_stores.cosmosdb import CosmosDBWrapper
-    from workshop_llm_agents.vector_stores.cosmosdb import Settings as CosmosDBWrapperSettings
 
     if verbose:
         logging.basicConfig(level=logging.DEBUG)
 
-    cosmosdb_wrapper = CosmosDBWrapper(CosmosDBWrapperSettings())
+    cosmosdb_wrapper = CosmosDBWrapper()
     vector_store = cosmosdb_wrapper.get_azure_cosmos_db_no_sql_vector_search(
-        embedding=AzureOpenAIWrapper(AzureOpenAIWrapperSettings()).get_azure_openai_embeddings(),
+        embedding=AzureOpenAIWrapper().get_azure_openai_embeddings(),
     )
 
     # Load the PDF
@@ -219,15 +217,13 @@ def vector_stores_cosmosdb_query_data(
     import json
 
     from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
-    from workshop_llm_agents.llms.azure_openai import Settings as AzureOpenAIWrapperSettings
     from workshop_llm_agents.vector_stores.cosmosdb import CosmosDBWrapper
-    from workshop_llm_agents.vector_stores.cosmosdb import Settings as CosmosDBWrapperSettings
 
     if verbose:
         logging.basicConfig(level=logging.DEBUG)
-    cosmosdb_wrapper = CosmosDBWrapper(CosmosDBWrapperSettings())
+    cosmosdb_wrapper = CosmosDBWrapper()
     vector_store = cosmosdb_wrapper.get_azure_cosmos_db_no_sql_vector_search(
-        embedding=AzureOpenAIWrapper(AzureOpenAIWrapperSettings()).get_azure_openai_embeddings(),
+        embedding=AzureOpenAIWrapper().get_azure_openai_embeddings(),
     )
     documents = vector_store.similarity_search(
         query=query,

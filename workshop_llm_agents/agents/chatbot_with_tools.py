@@ -5,17 +5,15 @@ from langgraph.graph import END, START, MessagesState, StateGraph
 from langgraph.prebuilt import ToolNode
 
 from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
-from workshop_llm_agents.llms.azure_openai import Settings as AzureOpenAISettings
 from workshop_llm_agents.tools.bing_search import BingSearchWrapper
-from workshop_llm_agents.tools.bing_search import Settings as BingSearchSettings
 
 tools = [
-    BingSearchWrapper(BingSearchSettings()).get_bing_search_tool(),
+    BingSearchWrapper().get_bing_search_tool(),
 ]
 
 tool_node = ToolNode(tools)
 
-llm = AzureOpenAIWrapper(AzureOpenAISettings()).get_azure_chat_openai()
+llm = AzureOpenAIWrapper().get_azure_chat_openai()
 
 model = llm.bind_tools(tools)
 
