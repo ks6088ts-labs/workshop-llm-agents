@@ -49,7 +49,7 @@ ci-test: install-deps-dev format-check lint test ## run CI tests
 # ---
 DOCKER_REPO_NAME ?= ks6088ts
 DOCKER_IMAGE_NAME ?= workshop-llm-agents
-DOCKER_COMMAND ?= python workshop_llm_agents/core.py
+DOCKER_COMMAND ?=
 
 # Tools
 TOOLS_DIR ?= $(HOME)/.local/bin
@@ -65,7 +65,10 @@ docker-build: ## build Docker image
 
 .PHONY: docker-run
 docker-run: ## run Docker container
-	docker run --rm $(DOCKER_REPO_NAME)/$(DOCKER_IMAGE_NAME):$(GIT_TAG) $(DOCKER_COMMAND)
+	docker run --rm \
+		-v $(PWD)/.env:/app/.env \
+		-p 8501:8501 \
+		$(DOCKER_REPO_NAME)/$(DOCKER_IMAGE_NAME):$(GIT_TAG) $(DOCKER_COMMAND)
 
 .PHONY: docker-lint
 docker-lint: ## lint Dockerfile
