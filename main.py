@@ -70,7 +70,7 @@ def agents_chatbot_with_tools_export(
 
 
 @app.command(
-    help="Run documentation agent ref. https://github.com/GenerativeAgents/agent-book/tree/main/chapter10",
+    help="Run documentation agent",
 )
 def agents_documentation_run(
     user_request: str = "スマートフォン向けの健康管理アプリを開発したい",
@@ -130,6 +130,27 @@ def llms_azure_openai_embeddings(
     embedding = embeddings.embed_query(message)
     print(f"Dimensions: {len(embedding)}")
     logger.info(embedding)
+
+
+# ---
+# tasks
+# ---
+@app.command(
+    help="Run the passive goal creator task",
+)
+def tasks_passive_goal_creator(
+    query: str = "I want to learn how to cook",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tasks.passive_goal_creator import Goal, PassiveGoalCreator
+
+    llm = AzureOpenAIWrapper().get_azure_chat_openai()
+    task = PassiveGoalCreator(llm=llm)
+    result: Goal = task.run(query=query)
+    print(result)
 
 
 # ---

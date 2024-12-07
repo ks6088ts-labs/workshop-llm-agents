@@ -7,6 +7,8 @@ commands=(
   # llms
   llms-azure-openai-chat
   llms-azure-openai-embeddings
+  # tasks
+  tasks-passive-goal-creator
   # tools
   tools-bing-search
   # vector-stores
