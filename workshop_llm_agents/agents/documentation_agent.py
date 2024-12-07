@@ -1,3 +1,4 @@
+# https://github.com/GenerativeAgents/agent-book/tree/main/chapter10
 import operator
 from typing import Annotated, Any
 
