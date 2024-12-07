@@ -222,6 +222,24 @@ def vector_stores_cosmosdb_query_data(
         )
 
 
+# ---
+# streamlit
+# ---
+@app.command(
+    help="NOTE: To run the Streamlit app run `$ poetry run streamlit run main.py streamlit-app`",
+)
+def streamlit_app(
+    verbose: bool = False,
+):
+    import streamlit as st
+
+    if verbose:
+        logging.basicConfig(level=logging.DEBUG)
+
+    st.title("Code samples for Streamlit")
+    st.info("Select a code sample from the sidebar to run it")
+
+
 if __name__ == "__main__":
     load_dotenv(override=True)
     app()

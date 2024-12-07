@@ -21,4 +21,4 @@ COPY . .
 # Install dependencies
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
-CMD ["python", "workshop_llm_agents/core.py"]
+CMD ["streamlit", "run", "main.py", "streamlit-app"]
