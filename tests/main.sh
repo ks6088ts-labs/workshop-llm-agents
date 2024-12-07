@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -eux
+
+# Run tests for main.py commands
+commands=(
+  # llms
+  llms-azure-openai-chat
+  llms-azure-openai-embeddings
+  # tools
+  tools-bing-search
+  # vector-stores
+  # vector-stores-cosmosdb-insert-data
+  vector-stores-cosmosdb-query-data
+)
+
+# See all available commands
+poetry run python main.py --help
+
+for command in "${commands[@]}"; do
+  poetry run python main.py "$command" --verbose
+done
+
+# Run Streamlit app
+# poetry run streamlit run main.py streamlit-app

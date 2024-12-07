@@ -16,7 +16,7 @@ class Settings(BaseSettings):
 
 
 class BingSearchWrapper:
-    def __init__(self, settings: Settings):
+    def __init__(self, settings=Settings()):
         self.settings = settings
 
     def get_bing_search_tool(self, k=3) -> BaseTool:

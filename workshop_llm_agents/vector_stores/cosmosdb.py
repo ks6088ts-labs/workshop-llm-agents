@@ -29,7 +29,7 @@ class Settings(BaseSettings):
 
 
 class CosmosDBWrapper:
-    def __init__(self, settings: Settings):
+    def __init__(self, settings=Settings()):
         self.settings = settings
 
     def get_cosmos_client(self) -> CosmosClient:

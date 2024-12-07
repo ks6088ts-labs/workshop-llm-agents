@@ -33,3 +33,7 @@ jobs:
         shell: bash
         run: |
           make ci-test
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          ignore_paths: .venv

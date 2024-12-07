@@ -13,7 +13,6 @@ from langgraph.pregel.types import StateSnapshot
 from pydantic import BaseModel, Field
 
 from workshop_llm_agents.tools.bing_search import BingSearchWrapper
-from workshop_llm_agents.tools.bing_search import Settings as BingSearchSettings
 
 
 class ResearchAgentState(BaseModel):
@@ -68,7 +67,7 @@ class TaskExecutor:
     def __init__(self, llm: BaseChatModel):
         self.llm = llm
         self.tools = [
-            BingSearchWrapper(BingSearchSettings()).get_bing_search_tool(),
+            BingSearchWrapper().get_bing_search_tool(),
         ]
 
     def run(self, task: str, results: list[str]) -> str:

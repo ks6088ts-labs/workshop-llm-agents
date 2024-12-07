@@ -29,10 +29,7 @@ class Settings(BaseSettings):
 
 
 class AzureOpenAIWrapper:
-    def __init__(
-        self,
-        settings: Settings,
-    ):
+    def __init__(self, settings=Settings()):
         self.settings = settings
 
     def get_azure_ad_token_provider(self):
