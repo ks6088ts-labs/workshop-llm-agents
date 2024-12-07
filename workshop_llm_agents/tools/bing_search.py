@@ -1,5 +1,3 @@
-import json
-
 from langchain_community.tools.bing_search import BingSearchResults
 from langchain_community.utilities import BingSearchAPIWrapper
 from langchain_core.tools import BaseTool
@@ -29,18 +27,3 @@ class BingSearchWrapper:
                 k=k,
             ),
         )
-
-
-if __name__ == "__main__":
-    settings = Settings()
-    wrapper = BingSearchWrapper(settings)
-    tool = wrapper.get_bing_search_tool()
-    response = tool.invoke(input="Microsoft")
-    response = json.loads(response.replace("'", '"'))
-    print(
-        json.dumps(
-            response,
-            indent=2,
-            ensure_ascii=False,
-        )
-    )
