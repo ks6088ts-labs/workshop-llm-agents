@@ -77,3 +77,17 @@ Graph for the Research Agent with Human-in-the-loop:
 Streamlit app for the Research Agent with Human-in-the-loop:
 
 ![Research Agent with Human-in-the-loop](./images/2_research_agent_with_human_in_the_loop.png)
+
+#### How to run the Research Agent with Human-in-the-loop
+
+```shell
+# Run from local
+$ poetry run python -m streamlit run workshop_llm_agents/streamlits/2_research_agent_with_human_in_the_loop.py
+
+# Run from Docker
+$ docker run --rm \
+    -v ${PWD}/.env:/app/.env \
+    -p 8501:8501 \
+    ks6088ts/workshop-llm-agents:latest \
+    python -m streamlit run workshop_llm_agents/streamlits/2_research_agent_with_human_in_the_loop.py
+```
