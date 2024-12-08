@@ -16,6 +16,7 @@ commands=(
   tasks-task-executor
   # tools
   tools-bing-search
+  tools-cosmosdb-search
   # vector-stores
   # vector-stores-cosmosdb-insert-data
   vector-stores-cosmosdb-query-data

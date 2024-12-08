@@ -307,6 +307,32 @@ def tools_bing_search(
     )
 
 
+@app.command(
+    help="Search CosmosDB",
+)
+def tools_cosmosdb_search(
+    query: str = "Microsoft",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    import json
+
+    from workshop_llm_agents.tools.cosmosdb_search import CosmosDBSearchWrapper
+
+    wrapper = CosmosDBSearchWrapper()
+    tool = wrapper.get_cosmosdb_search_tool()
+    response_str = tool.invoke(input=query)
+    response_json = json.loads(response_str.replace("'", '"'))
+    print(
+        json.dumps(
+            response_json,
+            indent=2,
+            ensure_ascii=False,
+        )
+    )
+
+
 # ---
 # vector_stores
 # ---
