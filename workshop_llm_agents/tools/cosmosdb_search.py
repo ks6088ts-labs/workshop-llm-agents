@@ -50,7 +50,7 @@ class CosmosDBSearchResults(BaseTool):  # type: ignore[override, override]
                 results.append(result)
             return str(results), results
         except Exception as e:
-            return [Document(content=str(e))]
+            return str(e), []
 
 
 class CosmosDBSearchWrapper:
