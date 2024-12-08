@@ -171,6 +171,24 @@ def tasks_prompt_optimizer(
     print(result.text)
 
 
+@app.command(
+    help="Run the query decomposer task",
+)
+def tasks_query_decomposer(
+    query: str = "I want to learn how to cook",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tasks.query_decomposer import DecomposedTasks, QueryDecomposer
+
+    llm = AzureOpenAIWrapper().get_azure_chat_openai()
+    task = QueryDecomposer(llm=llm)
+    result: DecomposedTasks = task.run(query=query)
+    print(result)
+
+
 # ---
 # tools
 # ---
