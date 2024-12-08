@@ -189,6 +189,30 @@ def tasks_query_decomposer(
     print(result)
 
 
+@app.command(
+    help="Run the task executor",
+)
+def tasks_task_executor(
+    task: str = "What's the weather in Tokyo today?",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tasks.task_executor import TaskExecutor
+    from workshop_llm_agents.tools.bing_search import BingSearchWrapper
+
+    llm = AzureOpenAIWrapper().get_azure_chat_openai()
+    task_executor = TaskExecutor(
+        llm=llm,
+        tools=[
+            BingSearchWrapper().get_bing_search_tool(),
+        ],
+    )
+    result = task_executor.run(task=task)
+    print(result)
+
+
 # ---
 # tools
 # ---
