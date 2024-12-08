@@ -13,6 +13,7 @@ from langgraph.pregel.types import StateSnapshot
 from pydantic import BaseModel, Field
 
 from workshop_llm_agents.tools.bing_search import BingSearchWrapper
+from workshop_llm_agents.tools.cosmosdb_search import CosmosDBSearchWrapper
 
 
 class ResearchAgentState(BaseModel):
@@ -68,6 +69,7 @@ class TaskExecutor:
         self.llm = llm
         self.tools = [
             BingSearchWrapper().get_bing_search_tool(),
+            CosmosDBSearchWrapper().get_cosmosdb_search_tool(),
         ]
 
     def run(self, task: str, results: list[str]) -> str:
