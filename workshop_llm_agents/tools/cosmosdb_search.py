@@ -3,7 +3,6 @@
 from typing import Literal
 
 from langchain_core.callbacks import CallbackManagerForToolRun
-from langchain_core.documents import Document
 from langchain_core.tools import BaseTool
 from langchain_openai import AzureOpenAIEmbeddings
 
