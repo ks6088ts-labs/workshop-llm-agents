@@ -6,9 +6,11 @@ from langgraph.prebuilt import ToolNode
 
 from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
 from workshop_llm_agents.tools.bing_search import BingSearchWrapper
+from workshop_llm_agents.tools.cosmosdb_search import CosmosDBSearchWrapper
 
 tools = [
     BingSearchWrapper().get_bing_search_tool(),
+    CosmosDBSearchWrapper().get_cosmosdb_search_tool(),
 ]
 
 tool_node = ToolNode(tools)
