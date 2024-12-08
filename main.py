@@ -213,6 +213,32 @@ def tasks_task_executor(
     print(result)
 
 
+@app.command(
+    help="Run the result aggregator task",
+)
+def tasks_result_aggregator(
+    query: str = "I want to learn how to cook",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tasks.result_aggregator import ResultAggregator
+
+    llm = AzureOpenAIWrapper().get_azure_chat_openai()
+    task = ResultAggregator(llm=llm)
+    result = task.run(
+        query=query,
+        response_definition="Provide a summary of the search results",
+        results=[
+            "Learn how to use a knife",
+            "Practice cooking rice",
+            "Learn how to make a salad",
+        ],
+    )
+    print(result)
+
+
 # ---
 # tools
 # ---

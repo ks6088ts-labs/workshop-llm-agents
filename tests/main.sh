@@ -12,6 +12,7 @@ commands=(
   tasks-prompt-optimizer
   tasks-query-decomposer
   tasks-task-executor
+  tasks-result-aggregator
   # tools
   tools-bing-search
   # vector-stores
