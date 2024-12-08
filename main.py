@@ -89,6 +89,28 @@ def agents_documentation_run(
     print(final_output)
 
 
+@app.command(
+    help="Run single path plan generation agent",
+)
+def agents_single_path_plan_generation_run(
+    query: str = "スマートフォン向けの健康管理アプリを開発したい",
+    verbose: bool = True,
+):
+    set_verbosity(verbose)
+    from workshop_llm_agents.agents.single_path_plan_generation_agent import SinglePathPlanGenerationAgent
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tools.bing_search import BingSearchWrapper
+
+    agent = SinglePathPlanGenerationAgent(
+        llm=AzureOpenAIWrapper().get_azure_chat_openai(),
+        tools=[
+            BingSearchWrapper().get_bing_search_tool(),
+        ],
+    )
+    final_output = agent.run(query=query)
+    print(final_output)
+
+
 # ---
 # llms
 # ---
@@ -169,6 +191,92 @@ def tasks_prompt_optimizer(
     task = PromptOptimizer(llm=llm)
     result: OptimizedGoal = task.run(query=query)
     print(result.text)
+
+
+@app.command(
+    help="Run the query decomposer task",
+)
+def tasks_query_decomposer(
+    query: str = "I want to learn how to cook",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tasks.query_decomposer import DecomposedTasks, QueryDecomposer
+
+    llm = AzureOpenAIWrapper().get_azure_chat_openai()
+    task = QueryDecomposer(llm=llm)
+    result: DecomposedTasks = task.run(query=query)
+    print(result)
+
+
+@app.command(
+    help="Run the response optimizer task",
+)
+def tasks_response_optimizer(
+    query: str = "I want to learn how to cook",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tasks.response_optimizer import ResponseOptimizer
+
+    llm = AzureOpenAIWrapper().get_azure_chat_openai()
+    task = ResponseOptimizer(llm=llm)
+    result = task.run(query=query)
+    print(result)
+
+
+@app.command(
+    help="Run the result aggregator task",
+)
+def tasks_result_aggregator(
+    query: str = "I want to learn how to cook",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tasks.result_aggregator import ResultAggregator
+
+    llm = AzureOpenAIWrapper().get_azure_chat_openai()
+    task = ResultAggregator(llm=llm)
+    result = task.run(
+        query=query,
+        response_definition="Provide a summary of the search results",
+        results=[
+            "Learn how to use a knife",
+            "Practice cooking rice",
+            "Learn how to make a salad",
+        ],
+    )
+    print(result)
+
+
+@app.command(
+    help="Run the task executor",
+)
+def tasks_task_executor(
+    task: str = "What's the weather in Tokyo today?",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tasks.task_executor import TaskExecutor
+    from workshop_llm_agents.tools.bing_search import BingSearchWrapper
+
+    llm = AzureOpenAIWrapper().get_azure_chat_openai()
+    task_executor = TaskExecutor(
+        llm=llm,
+        tools=[
+            BingSearchWrapper().get_bing_search_tool(),
+        ],
+    )
+    result = task_executor.run(task=task)
+    print(result)
 
 
 # ---

@@ -10,6 +10,10 @@ commands=(
   # tasks
   tasks-passive-goal-creator
   tasks-prompt-optimizer
+  tasks-query-decomposer
+  tasks-response-optimizer
+  tasks-result-aggregator
+  tasks-task-executor
   # tools
   tools-bing-search
   # vector-stores
