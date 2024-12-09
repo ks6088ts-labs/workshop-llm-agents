@@ -75,3 +75,13 @@ YouTube: [Research Agent using Azure](https://youtu.be/7Tp_TvTpuw8)
 #### References
 
 - [Research Agent with Human-in-the-loop](https://github.com/mahm/softwaredesign-llm-application/tree/main/14)
+
+### Documentation Agent
+
+Graph:
+
+![Documentation Agent](./images/documentation_agent.png)
+
+Screenshot:
+
+![Documentation Agent](./images/3_documentation_agent.png)

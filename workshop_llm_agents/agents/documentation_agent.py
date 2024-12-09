@@ -1,6 +1,7 @@
 # https://github.com/GenerativeAgents/agent-book/tree/main/chapter10
 import operator
-from typing import Annotated, Any
+from collections.abc import Callable
+from typing import Annotated, Any, Literal
 
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
@@ -249,6 +250,7 @@ class DocumentationAgent:
         self.interview_conductor = InterviewConductor(llm=llm)
         self.information_evaluator = InformationEvaluator(llm=llm)
         self.requirements_generator = RequirementsDocumentGenerator(llm=llm)
+        self.subscribers: list[Callable[[str, str, str], None]] = []
 
         # グラフの作成
         self.graph = self._create_graph()
@@ -314,3 +316,20 @@ class DocumentationAgent:
         final_state = self.graph.invoke(initial_state)
         # 最終的な要件定義書の取得
         return final_state["requirements_doc"]
+
+    def subscribe(self, subscriber: Callable[[str, str, str], None]) -> None:
+        self.subscribers.append(subscriber)
+
+    def _notify(self, type: Literal["human", "agent"], title: str, message: str) -> None:
+        for subscriber in self.subscribers:
+            subscriber(type, title, message)
+
+    def handle_human_message(self, human_message: str, thread_id: str) -> None:
+        self._notify("human", human_message, "")
+        result = self.run(user_request=human_message)
+        self._notify("agent", "要件定義書", result)
+
+    def mermaid_png(self, output_file_path=None) -> bytes:
+        return self.graph.get_graph().draw_mermaid_png(
+            output_file_path=output_file_path,
+        )

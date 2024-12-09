@@ -411,7 +411,7 @@ def vector_stores_cosmosdb_query_data(
     help="NOTE: To run the Streamlit app run `$ poetry run streamlit run main.py streamlit-app`",
 )
 def streamlit_app(
-    verbose: bool = False,
+    verbose: bool = True,
 ):
     set_verbosity(verbose)
     import streamlit as st
