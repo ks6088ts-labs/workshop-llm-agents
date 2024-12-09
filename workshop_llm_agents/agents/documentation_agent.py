@@ -313,9 +313,11 @@ class DocumentationAgent:
         # 初期状態の設定
         initial_state = InterviewState(user_request=user_request)
         # グラフの実行
-        final_state = self.graph.invoke(initial_state)
+        for event in self.graph.stream(initial_state):
+            node = list(event.keys())[0]
+            self._notify("agent", node, event[node])
         # 最終的な要件定義書の取得
-        return final_state["requirements_doc"]
+        return event[node]["requirements_doc"]
 
     def subscribe(self, subscriber: Callable[[str, str, str], None]) -> None:
         self.subscribers.append(subscriber)

@@ -11,11 +11,15 @@ from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
 def show_message(
     type: Literal["human", "agent"],
     title: str,
-    message: str,
+    message: str | dict[str, str],
 ) -> None:
     with st.chat_message(type):
         st.markdown(f"**{title}**")
-        st.markdown(message)
+        if isinstance(message, dict):
+            for key, value in message.items():
+                st.markdown(f"**{key}**: {value}")
+        else:
+            st.markdown(message)
 
 
 def app() -> None:
