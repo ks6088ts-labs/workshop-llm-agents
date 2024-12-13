@@ -154,6 +154,29 @@ def llms_azure_openai_embeddings(
     logger.info(embedding)
 
 
+@app.command(
+    help="Chat with Ollama model",
+)
+def llms_ollama_chat(
+    message: str = "What is the capital of Japan?",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+    import json
+
+    from workshop_llm_agents.llms.ollama import OllamaWrapper
+
+    wrapper = OllamaWrapper()
+    llm = wrapper.get_chat_ollama()
+    response = llm.invoke(input=message)
+    print(
+        json.dumps(
+            response.model_dump(),
+            indent=2,
+        )
+    )
+
+
 # ---
 # tasks
 # ---
