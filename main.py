@@ -173,6 +173,7 @@ def llms_ollama_chat(
         json.dumps(
             response.model_dump(),
             indent=2,
+            ensure_ascii=False,
         )
     )
 
