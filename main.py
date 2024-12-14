@@ -280,6 +280,24 @@ def tasks_result_aggregator(
 
 
 @app.command(
+    help="Run the scoring evaluator task",
+)
+def tasks_scoring_evaluator(
+    query: str = "Something wrong with my computer",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tasks.scoring_evaluator import ScoringEvaluator
+
+    llm = AzureOpenAIWrapper().get_azure_chat_openai()
+    task = ScoringEvaluator(llm=llm)
+    result = task.run(query=query)
+    print(result)
+
+
+@app.command(
     help="Run the task executor",
 )
 def tasks_task_executor(
