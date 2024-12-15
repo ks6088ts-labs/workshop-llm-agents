@@ -6,7 +6,7 @@ from workshop_llm_agents.agents.chatbot_with_tools import graph as chatbot_with_
 with st.sidebar:
     st.image(chatbot_with_tools_graph.get_graph().draw_mermaid_png())
     "[Azure Portal](https://portal.azure.com/)"
-    "[View the source code](https://github.com/ks6088ts-labs/workshop-llm-agents/blob/main/workshop_llm_agents/graphs/chatbot_with_tools.py)"
+    "[View the source code](https://github.com/ks6088ts-labs/workshop-llm-agents/blob/main/workshop_llm_agents/agents/chatbot_with_tools.py)"
 
 
 def is_configured():

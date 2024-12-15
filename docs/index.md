@@ -85,3 +85,13 @@ Graph:
 Screenshot:
 
 ![Documentation Agent](./images/3_documentation_agent.png)
+
+### Tools Agent
+
+Graph:
+
+![Tools Agent](./images/tools_agent.png)
+
+Screenshot:
+
+![Tools Agent](./images/4_tools_agent.png)
