@@ -182,6 +182,33 @@ def llms_ollama_chat(
 # tasks
 # ---
 @app.command(
+    help="Run the image labeler task",
+)
+def tasks_image_labeler(
+    file: str = "./docs/images/workshop-llm-agents.png",
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+
+    import base64
+
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tasks.image_labeler import ImageLabeler, LabelingResult
+
+    try:
+        with open(file, "rb") as f:
+            encoded_image = base64.b64encode(f.read()).decode()
+    except Exception as e:
+        print(e)
+        exit(1)
+
+    llm = AzureOpenAIWrapper().get_azure_chat_openai()
+    task = ImageLabeler(llm=llm)
+    result: LabelingResult = task.run(encoded_image=encoded_image)
+    print(f"Labels: {result.labels}")
+
+
+@app.command(
     help="Run the passive goal creator task",
 )
 def tasks_passive_goal_creator(

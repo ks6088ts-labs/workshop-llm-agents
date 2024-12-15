@@ -13,3 +13,16 @@ $ poetry run python main.py tasks-scoring-evaluator \
 
 - [Scoring Evaluator](https://python.langchain.com/v0.1/docs/guides/productionization/evaluation/string/scoring_eval_chain/)
 - [libs/langchain/langchain/evaluation/scoring](https://github.com/langchain-ai/langchain/tree/master/libs/langchain/langchain/evaluation/scoring)
+
+## ImageLabeler
+
+```shell
+$ poetry run python main.py tasks-image-labeler \
+    --file ./docs/images/workshop-llm-agents.png
+
+# Labels: [<Label.AZURE: 'Azure'>, <Label.LANGCHAIN: 'Langchain'>]
+```
+
+### References
+
+- []()
