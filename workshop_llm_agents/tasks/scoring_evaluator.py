@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 
 class ScoringResult(BaseModel):
-    score: int = Field(..., ge=1, le=10, description="Evaluation score")
+    score: int = Field(..., ge=0, le=10, description="Evaluation score")
     reason: str = Field(..., description="Reason for the evaluation")
 
     @property
