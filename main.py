@@ -111,6 +111,49 @@ def agents_single_path_plan_generation_run(
     print(final_output)
 
 
+@app.command(
+    help="Run tools agent",
+)
+def agents_tools_run(
+    query: str = "最近の京都のニュース",
+    verbose: bool = True,
+):
+    set_verbosity(verbose)
+
+    from workshop_llm_agents.agents.tools_agent import ToolsAgent
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+    from workshop_llm_agents.tools.bing_search import BingSearchWrapper
+
+    azure_openai_wrapper = AzureOpenAIWrapper()
+    llm = azure_openai_wrapper.get_azure_chat_openai()
+    agent = ToolsAgent(
+        llm=llm,
+        tools=[
+            BingSearchWrapper().get_bing_search_tool(),
+        ],
+    )
+    response = agent.run(query=query, thread_id="1")
+    print(f"final output: {response}")
+
+
+@app.command(
+    help="Export the tools graph to a PNG file",
+)
+def agents_tools_export(
+    png: str = None,
+    verbose: bool = False,
+):
+    set_verbosity(verbose)
+    from workshop_llm_agents.agents.chatbot_with_tools import graph
+
+    print(graph.get_graph().draw_mermaid())
+
+    if png:
+        graph.get_graph().draw_mermaid_png(
+            output_file_path=png,
+        )
+
+
 # ---
 # llms
 # ---
