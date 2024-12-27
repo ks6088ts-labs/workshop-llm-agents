@@ -5,6 +5,7 @@ repo_url: https://github.com/ks6088ts-labs/workshop-llm-agents
 repo_name: ks6088ts-labs/workshop-llm-agents
 nav:
   - Home: index.md
+  - Agents: agents.md
   - Scripts: scripts.md
   - LLMs: llms.md
   - Tasks: tasks.md

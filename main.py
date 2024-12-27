@@ -112,6 +112,50 @@ def agents_single_path_plan_generation_run(
 
 
 @app.command(
+    help="Run summarize agent",
+)
+def agents_summarize_run(
+    web_path: str = "https://learn.microsoft.com/ja-jp/azure/ai-services/openai/overview",
+    png=None,
+    verbose: bool = True,
+):
+    set_verbosity(verbose)
+
+    import asyncio
+
+    from langchain_community.document_loaders import WebBaseLoader
+    from langchain_text_splitters import CharacterTextSplitter
+
+    from workshop_llm_agents.agents.summarize_agent import SummarizeAgent
+    from workshop_llm_agents.llms.azure_openai import AzureOpenAIWrapper
+
+    azure_openai_wrapper = AzureOpenAIWrapper()
+    llm = azure_openai_wrapper.get_azure_chat_openai()
+    agent = SummarizeAgent(
+        llm=llm,
+    )
+
+    if png:
+        try:
+            image_bytes = agent.mermaid_png(output_file_path=png)
+            with open(png, "wb") as f:
+                f.write(image_bytes)
+        except Exception as e:
+            logger.error(f"failing to save PNG: {e}")
+
+    loader = WebBaseLoader(web_path=web_path)
+    docs = loader.load()
+    text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
+        chunk_size=1000,
+        chunk_overlap=0,
+    )
+    docs = text_splitter.split_documents(docs)
+
+    response = asyncio.run(agent.run(docs=docs))
+    print(f"final output: {response}")
+
+
+@app.command(
     help="Run tools agent",
 )
 def agents_tools_run(
@@ -137,7 +181,7 @@ def agents_tools_run(
 
 
 @app.command(
-    help="Export the tools graph to a PNG file",
+    help="Export the tools agent graph to a PNG file",
 )
 def agents_tools_export(
     png: str = None,
