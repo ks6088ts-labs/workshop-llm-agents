@@ -1,4 +1,3 @@
-# https://github.com/GenerativeAgents/agent-book/blob/main/chapter12/single_path_plan_generation/main.py
 import operator
 from typing import Annotated, Literal, TypedDict
 

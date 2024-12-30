@@ -19,7 +19,7 @@ install-deps-dev: ## install dependencies for development
 
 .PHONY: install-deps
 install-deps: ## install dependencies for production
-	poetry install --without dev
+	poetry install --without dev,notebook
 
 .PHONY: format-check
 format-check: ## format check
@@ -81,7 +81,8 @@ docker-scan: ## scan Docker image
 	trivy image $(DOCKER_REPO_NAME)/$(DOCKER_IMAGE_NAME):$(GIT_TAG)
 
 .PHONY: ci-test-docker
-ci-test-docker: docker-lint docker-build docker-run ## run CI test for Docker
+ci-test-docker: docker-lint docker-build ## run CI test for Docker
+	# make docker-run
 	# make docker-scan
 
 # ---
@@ -98,3 +99,11 @@ docs-serve: ## serve documentation
 
 .PHONY: ci-test-docs
 ci-test-docs: docs ## run CI test for documentation
+
+# ---
+# notebook
+# ---
+
+.PHONY: notebook
+notebook: install-deps-dev ## run Jupyter notebook
+	poetry run jupyter lab

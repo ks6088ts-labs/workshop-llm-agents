@@ -5,7 +5,9 @@ description = "A GitHub template repository for Python"
 authors = ["ks6088ts <ks6088ts@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-package-mode = false
+packages = [
+    { include = "workshop_llm_agents", from = "." }
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -34,6 +36,10 @@ pytest-cov = "^6.0.0"
 
 [tool.poetry.group.docs.dependencies]
 mkdocs-material = "^9.5.47"
+
+
+[tool.poetry.group.notebook.dependencies]
+jupyterlab = "^4.3.4"
 
 [build-system]
 requires = ["poetry-core"]
