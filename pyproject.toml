@@ -21,6 +21,8 @@ azure-identity = "^1.19.0"
 langgraph = "^0.2.53"
 streamlit = "^1.40.2"
 langchain-ollama = "^0.2.1"
+beautifulsoup4 = "^4.12.3"
+numpy = "^1.22.4"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^4.0.1"
