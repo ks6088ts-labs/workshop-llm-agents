@@ -145,9 +145,6 @@ def agents_summarize_run(
 
     loader = WebBaseLoader(
         web_path=web_path,
-        header_template={
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",  # noqa: E501
-        },
     )
     docs = loader.load()
     text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
