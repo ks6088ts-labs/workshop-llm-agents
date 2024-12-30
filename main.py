@@ -3,7 +3,7 @@ import logging
 import typer
 from dotenv import load_dotenv
 
-load_dotenv(override=True)
+assert load_dotenv(override=True), "Failed to load .env file"
 logger = logging.getLogger(__name__)
 app = typer.Typer()
 
@@ -143,15 +143,20 @@ def agents_summarize_run(
         except Exception as e:
             logger.error(f"failing to save PNG: {e}")
 
-    loader = WebBaseLoader(web_path=web_path)
+    loader = WebBaseLoader(
+        web_path=web_path,
+        header_template={
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",  # noqa: E501
+        },
+    )
     docs = loader.load()
     text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
         chunk_size=1000,
         chunk_overlap=0,
     )
-    docs = text_splitter.split_documents(docs)
+    chunks = text_splitter.split_documents(docs)
 
-    response = asyncio.run(agent.run(docs=docs))
+    response = asyncio.run(agent.run(docs=chunks))
     print(f"final output: {response}")
 
 

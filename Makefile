@@ -19,7 +19,7 @@ install-deps-dev: ## install dependencies for development
 
 .PHONY: install-deps
 install-deps: ## install dependencies for production
-	poetry install --without dev
+	poetry install --without dev,notebook
 
 .PHONY: format-check
 format-check: ## format check
@@ -98,3 +98,11 @@ docs-serve: ## serve documentation
 
 .PHONY: ci-test-docs
 ci-test-docs: docs ## run CI test for documentation
+
+# ---
+# notebook
+# ---
+
+.PHONY: notebook
+notebook: install-deps-dev ## run Jupyter notebook
+	poetry run jupyter lab
