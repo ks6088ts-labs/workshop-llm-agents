@@ -26,8 +26,6 @@ class ResearchAgentState(BaseModel):
 class DecomposedTasks(BaseModel):
     tasks: list[str] = Field(
         default_factory=list,
-        min_items=3,
-        max_items=5,
         description="List of decomposed tasks",
     )
 

@@ -107,3 +107,11 @@ ci-test-docs: docs ## run CI test for documentation
 .PHONY: notebook
 notebook: install-deps-dev ## run Jupyter notebook
 	poetry run jupyter lab
+
+# ---
+# Project
+# ---
+
+.PHONY: run
+run: ## run project
+	poetry run streamlit run main.py streamlit-app

@@ -20,8 +20,6 @@ class Label(Enum):
 class LabelingResult(BaseModel):
     labels: list[Label] = Field(
         default_factory=list,
-        min_items=0,
-        max_items=3,
         description="Labels assigned to the image",
     )
 
