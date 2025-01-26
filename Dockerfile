@@ -21,4 +21,4 @@ COPY . .
 # Install dependencies
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
-CMD ["streamlit", "run", "main.py", "streamlit-app"]
+CMD ["streamlit", "run", "main.py", "streamlit-app", "--", "--server.port", "8501", "--server.enableCORS", "false"]
