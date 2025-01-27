@@ -35,7 +35,7 @@ pytest-cov = "^6.0.0"
 
 
 [tool.poetry.group.docs.dependencies]
-mkdocs-material = "^9.5.47"
+mkdocs-material = "^9.5.50"
 
 
 [tool.poetry.group.notebook.dependencies]
