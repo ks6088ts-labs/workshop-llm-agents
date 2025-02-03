@@ -39,7 +39,7 @@ mkdocs-material = "^9.5.50"
 
 
 [tool.poetry.group.notebook.dependencies]
-jupyterlab = "^4.3.4"
+jupyterlab = "^4.3.5"
 
 [build-system]
 requires = ["poetry-core"]
