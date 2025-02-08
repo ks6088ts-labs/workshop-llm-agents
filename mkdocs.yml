@@ -9,6 +9,7 @@ nav:
   - Scripts: scripts.md
   - LLMs: llms.md
   - Tasks: tasks.md
+  - References: references.md
 theme:
   name: material
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#automatic-light-dark-mode
