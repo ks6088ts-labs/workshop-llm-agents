@@ -1,0 +1,24 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui
+    container_name: open-webui
+    volumes:
+      - open-webui:/app/backend/data
+    ports:
+      - 8080:8080
+    environment:
+      - "WEBUI_SECRET_KEY="
+      - "ENABLE_OLLAMA_API=false"
+      - "OPENAI_API_BASE_URL=http://litellm:4000"
+      - "OPENAI_API_KEY=sk-12345"
+
+  litellm:
+    image: ghcr.io/berriai/litellm:main-stable
+    volumes:
+      - ./litellm/config.yaml:/config.yaml
+    command: ["--config", "/config.yaml"]
+    env_file:
+      - .env
+
+volumes:
+  open-webui: {}
