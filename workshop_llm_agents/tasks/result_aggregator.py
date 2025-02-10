@@ -15,7 +15,7 @@ class ResultAggregator:
             "与えられた目標に対し、調査結果を用いて、以下の指示に基づいてレスポンスを生成してください。\n"
             "{response_definition}"
         )
-        results_str = "\n\n".join(f"Info {i+1}:\n{result}" for i, result in enumerate(results))
+        results_str = "\n\n".join(f"Info {i + 1}:\n{result}" for i, result in enumerate(results))
         chain = prompt | self.llm | StrOutputParser()
         return chain.invoke(
             {

@@ -191,7 +191,7 @@ class InformationEvaluator:
             {
                 "user_request": user_request,
                 "interview_results": "\n".join(
-                    f"ペルソナ: {i.persona.name} - {i.persona.background}\n" f"質問: {i.question}\n回答: {i.answer}\n"
+                    f"ペルソナ: {i.persona.name} - {i.persona.background}\n質問: {i.question}\n回答: {i.answer}\n"
                     for i in interviews
                 ),
             }
@@ -235,7 +235,7 @@ class RequirementsDocumentGenerator:
             {
                 "user_request": user_request,
                 "interview_results": "\n".join(
-                    f"ペルソナ: {i.persona.name} - {i.persona.background}\n" f"質問: {i.question}\n回答: {i.answer}\n"
+                    f"ペルソナ: {i.persona.name} - {i.persona.background}\n質問: {i.question}\n回答: {i.answer}\n"
                     for i in interviews
                 ),
             }
