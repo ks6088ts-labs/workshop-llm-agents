@@ -9,6 +9,7 @@ from azure.identity import (
     get_bearer_token_provider,
 )
 from dotenv import load_dotenv
+from langchain_azure_ai.chat_models import AzureAIChatCompletionsModel
 from langchain_openai import AzureChatOpenAI
 from openai import AzureOpenAI
 
@@ -64,6 +65,25 @@ def get_azure_chat_openai(
     )
 
 
+def get_azure_ai_chat_completion_model(
+    service_principal: bool,
+    temperature: float = 0,
+):
+    if service_principal:
+        return AzureAIChatCompletionsModel(
+            temperature=temperature,
+            endpoint=getenv("AZURE_AI_FOUNDRY_INFERENCE_ENDPOINT"),
+            credential=DefaultAzureCredential(),
+            model_name=getenv("AZURE_OPENAI_MODEL_GPT"),
+        )
+    return AzureAIChatCompletionsModel(
+        temperature=temperature,
+        endpoint=getenv("AZURE_AI_FOUNDRY_INFERENCE_ENDPOINT"),
+        credential=getenv("AZURE_AI_FOUNDRY_INFERENCE_CREDENTIAL"),
+        model_name=getenv("AZURE_OPENAI_MODEL_GPT"),
+    )
+
+
 @app.command()
 def openai(
     service_principal: bool = False,
@@ -96,6 +116,23 @@ def langchain(
         logging.basicConfig(level=logging.DEBUG)
 
     llm = get_azure_chat_openai(service_principal)
+
+    response = llm.invoke(
+        input="Hello",
+    )
+
+    print(response.content)
+
+
+@app.command()
+def langchain_azure_ai_foundry(
+    service_principal: bool = False,
+    verbose: bool = False,
+):
+    if verbose:
+        logging.basicConfig(level=logging.DEBUG)
+
+    llm = get_azure_ai_chat_completion_model(service_principal)
 
     response = llm.invoke(
         input="Hello",
