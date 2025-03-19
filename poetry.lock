@@ -4042,20 +4042,20 @@ zstd = ["zstandard"]
 
 [[package]]
 name = "pymupdf"
-version = "1.25.2"
+version = "1.25.4"
 description = "A high performance Python library for data extraction, analysis, conversion & manipulation of PDF (and other) documents."
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "pymupdf-1.25.2-cp39-abi3-macosx_10_9_x86_64.whl", hash = "sha256:59dea22b633cc4fc13670b4c5db50d71f8cd4f420814420f33ce47ddcb61e1f6"},
-    {file = "pymupdf-1.25.2-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:e8b8a874497cd0deee89a6a4fb76a3a08173c8d39e88fc7cf715764ec5a243e9"},
-    {file = "pymupdf-1.25.2-cp39-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:f61e5cdb25b86eb28d34aa3557b49ecf9e361d5f5cd3b1660406f8f0bf813af7"},
-    {file = "pymupdf-1.25.2-cp39-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:ae8cfa7a97d78f813d286ecba32369059d88073edd1e5cf105f4cd0811f71925"},
-    {file = "pymupdf-1.25.2-cp39-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:295505fe1ecb7c7b57d4124d373e207ea311d8e40bc7ac3016d8ec2d60b091e9"},
-    {file = "pymupdf-1.25.2-cp39-abi3-win32.whl", hash = "sha256:b9488c8b82bb9be36fb13ee0c8d43b0ddcc50af83b61da01e6040413d9e67da6"},
-    {file = "pymupdf-1.25.2-cp39-abi3-win_amd64.whl", hash = "sha256:1b4ca6f5780d319a08dff885a5a0e3585c5d7af04dcfa063c535b88371fd91c1"},
-    {file = "pymupdf-1.25.2.tar.gz", hash = "sha256:9ea88ff1b3ccb359620f106a6fd5ba6877d959d21d78272052c3496ceede6eec"},
+    {file = "pymupdf-1.25.4-cp39-abi3-macosx_10_9_x86_64.whl", hash = "sha256:b39ab5fc0cc793f2a93908cb4dc13182e61e9ace3476850ebf0e505f65355475"},
+    {file = "pymupdf-1.25.4-cp39-abi3-macosx_11_0_arm64.whl", hash = "sha256:72ac2a460e15a4b75fb22d0bdeb9eb9b3bd6ab44d5288e56f85ff9e4241d0830"},
+    {file = "pymupdf-1.25.4-cp39-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:bd16e264438b01bf6f6b8722deb49df20c0a9a7be2b4a8e29dcb7b5183d8b42a"},
+    {file = "pymupdf-1.25.4-cp39-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:72817aa5f5023632346eee4aad0c32018d7879cf9a72e1820054dc9d8c48150f"},
+    {file = "pymupdf-1.25.4-cp39-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:a8c23242d209512437187dc728001fc7c65c2dd9d37b50071f34c5cd745194a3"},
+    {file = "pymupdf-1.25.4-cp39-abi3-win32.whl", hash = "sha256:d90e6087f9b153999fa9f2c4709488fb0355de0302ec502a76c4fc0c0a0c535e"},
+    {file = "pymupdf-1.25.4-cp39-abi3-win_amd64.whl", hash = "sha256:af8fa1f7920b3b27343b2511cb9fc44baf2bad8b948db0b0f9d5b2fa589cb305"},
+    {file = "pymupdf-1.25.4.tar.gz", hash = "sha256:5f189466b68901055a9ddc77dc1c91cba081a60964f0caa6ff5b9b87001a0194"},
 ]
 
 [[package]]
@@ -5789,4 +5789,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "73a81a5ebe6348ac3b45e9008957aff613cfa189ee632fbd486f3fc44035d968"
+content-hash = "8b1256c857584f0e7d621df4789569ec1132923a636a070bb613ce5bc8c81389"
