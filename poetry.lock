@@ -2049,14 +2049,14 @@ tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<10"
 
 [[package]]
 name = "langchain-azure-ai"
-version = "0.1.1"
+version = "0.1.2"
 description = "An integration package to support Azure AI Foundry capabilities for model inference in LangChain."
 optional = false
 python-versions = "<4.0,>=3.9"
 groups = ["main"]
 files = [
-    {file = "langchain_azure_ai-0.1.1-py3-none-any.whl", hash = "sha256:d1066de90511e6f61430e945caef687cef9218ae856bd47f9100ccf53f1cf377"},
-    {file = "langchain_azure_ai-0.1.1.tar.gz", hash = "sha256:8b57224d7662fb95f447cb1ae01f3b5b68806208d9dbf128795de614e2d4afc1"},
+    {file = "langchain_azure_ai-0.1.2-py3-none-any.whl", hash = "sha256:45ca6d4897661d36a935bfb34cf3786477932a4f38e728f77507e52f223b1d0a"},
+    {file = "langchain_azure_ai-0.1.2.tar.gz", hash = "sha256:9be07aa32d2b7a22937f5dd9c9ea4fa022315f03a883bd3bd8d0b6d028700421"},
 ]
 
 [package.dependencies]
@@ -5789,4 +5789,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "8b1256c857584f0e7d621df4789569ec1132923a636a070bb613ce5bc8c81389"
+content-hash = "e0ef13e0a68a3268ba1ba1638af43e6b42165d94748e40e5d5a4cafb3070a1ce"
